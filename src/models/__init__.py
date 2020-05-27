@@ -11,3 +11,14 @@ class User(db.Model):
     active = db.Column(db.Boolean, default=True)
     verified = db.Column(db.Boolean, default=False)
     last_login = db.Column(db.DateTime)
+
+
+class Character(db.Model):
+    character_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(User.user_id),
+        nullable=False
+        )

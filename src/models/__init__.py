@@ -12,6 +12,8 @@ class User(db.Model):
     verified = db.Column(db.Boolean, default=False)
     last_login = db.Column(db.DateTime)
 
+    characters = db.relationship('Character', backref='user', lazy=True)
+
 
 class Character(db.Model):
     character_id = db.Column(db.Integer, primary_key=True)

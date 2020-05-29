@@ -7,6 +7,7 @@ app.config.from_pyfile("./settings.py")
 
 db.init_app(app)
 
+
 @app.route("/healthz")
 def healthz():
     return jsonify({
@@ -14,18 +15,13 @@ def healthz():
     }), 200
 
 
-# TODO: Remove before prod
-@app.route("/create_db")
-def create_db():
-    try:
-        db.create_all()
-        return "Done", 200
-    except Exception as e:
-        return f"Error creating DB: {e}", 500
-
-
 @app.route("/run_tests")
 def run_tests():
+
+    try:
+        db.create_all()
+    except Exception as e:
+        return f"Error creating DB: {e}", 500
     from datetime import datetime
     from models import User, Character
 
@@ -38,14 +34,25 @@ def run_tests():
         last_login=datetime.now()
         )
 
-    new_character = Character(
+    new_character_1 = Character(
         name="Tinemir",
         user=new_user
         )
 
+    new_character_2 = Character(
+        name="Uther",
+    )
+
+    new_user.characters.append(new_character_2)
+
     db.session.add(new_user)
-    db.session.add(new_character)
+    db.session.add(new_character_1)
     db.session.commit()
+
+    # Query tests
+    my_chars = Character.query.filter_by(user=new_user).all()
+    for char in my_chars:
+        print(char.name)
 
     return "Finished", 200
 

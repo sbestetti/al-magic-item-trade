@@ -17,15 +17,18 @@ def healthz():
 
 @app.route("/run_tests")
 def run_tests():
-
+    # TODO: Move when tests setup
+    # Tests
     try:
+        db.drop_all()
         db.create_all()
     except Exception as e:
         return f"Error creating DB: {e}", 500
     from datetime import datetime
-    from models import User, Character
 
-    new_user = User(
+    from models import User, Character, Item
+
+    new_user_1 = User(
         name="Sergio",
         email="sergio@email.com",
         dci="12345678",
@@ -33,26 +36,76 @@ def run_tests():
         verified=False,
         last_login=datetime.now()
         )
+    
+    new_user_2 = User(
+        name="Rosca",
+        email="rosca@email.com",
+        dci="910111213",
+        active=True,
+        verified=False,
+        last_login=datetime.now()
+        )
 
     new_character_1 = Character(
         name="Tinemir",
-        user=new_user
         )
 
     new_character_2 = Character(
         name="Uther",
     )
 
-    new_user.characters.append(new_character_2)
+    new_character_3 = Character(
+        name="Rosquette",
+    )
 
-    db.session.add(new_user)
-    db.session.add(new_character_1)
+    new_item_1 = Item(
+        name="Magic Sword",
+        type_="Weapon",
+        rarity="Unique",
+        attuned=True,
+        notes="Bleeds",
+        source="DMG"
+    )
+
+    new_item_2 = Item(
+        name="Magic Staff",
+        type_="Weapon",
+        rarity="Rare",
+        attuned=True,
+        notes="Bleeds",
+        source="DMG"
+    )
+
+    new_item_3 = Item(
+        name="Magic beads",
+        type_="Weapon",
+        rarity="Uncommon",
+        attuned=True,
+        notes="Bleeds",
+        source="DMG"
+    )
+
+    new_character_1.items.append(new_item_1)
+    new_character_1.items.append(new_item_2)
+
+    new_character_3.items.append(new_item_3)
+
+    new_user_1.characters.append(new_character_1)
+    new_user_1.characters.append(new_character_2)
+    new_user_2.characters.append(new_character_3)
+
+    db.session.add(new_user_1)
+    db.session.add(new_user_2)
+
     db.session.commit()
 
     # Query tests
-    my_chars = Character.query.filter_by(user=new_user).all()
+    my_chars = Character.query.filter_by(user=new_user_1)
+    items = list()
     for char in my_chars:
-        print(char.name)
+        for item in char.items:
+            items.append(item.name)
+    print(items)
 
     return "Finished", 200
 

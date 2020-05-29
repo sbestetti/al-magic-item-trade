@@ -24,3 +24,13 @@ class Character(db.Model):
         )
 
     user = db.relationship("User", backref=db.backref("user"), lazy=True)
+
+
+class Item(db.Model):
+    item_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    type_ = db.Column(db.String(80), nullable=False)
+    rarity = db.Column(db.String(30), nullable=False)
+    attuned = db.Column(db.Boolean, nullable=False)
+    notes = db.Column(db.String(300), nullable=False)
+    source = db.Column(db.String(10), nullable=False)

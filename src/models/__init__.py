@@ -22,3 +22,5 @@ class Character(db.Model):
         db.ForeignKey(User.user_id),
         nullable=False
         )
+
+    user = db.relationship("User", backref=db.backref("user"), lazy=True)

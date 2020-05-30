@@ -26,7 +26,7 @@ def run_tests():
         return f"Error creating DB: {e}", 500
     from datetime import datetime
 
-    from models import User, Character, Item
+    from models import User, Character, Item, Offer
 
     new_user_1 = User(
         name="Sergio",
@@ -97,6 +97,16 @@ def run_tests():
     db.session.add(new_user_1)
     db.session.add(new_user_2)
 
+    db.session.commit()
+
+    # Offer tests
+    new_offer_1 = Offer(
+        offered_item=new_item_1.item_id,
+        wanted_item=new_item_3.item_id,
+        date_created=datetime.now(),
+    )
+
+    db.session.add(new_offer_1)
     db.session.commit()
 
     # Query tests

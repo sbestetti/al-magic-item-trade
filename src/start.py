@@ -36,7 +36,7 @@ def run_tests():
         verified=False,
         last_login=datetime.now()
         )
-    
+
     new_user_2 = User(
         name="Rosca",
         email="rosca@email.com",

@@ -52,3 +52,20 @@ class Item(db.Model):
         "Character",
         secondary=inventory,
         lazy="subquery")
+
+
+class Offer(db.Model):
+    offer_id = db.Column(db.Integer, primary_key=True)
+
+    offered_item = db.Column(
+        db.Integer,
+        db.ForeignKey(Item.item_id),
+        nullable=False)
+
+    wanted_item = db.Column(
+        db.Integer,
+        db.ForeignKey(Item.item_id),
+        nullable=False)
+
+    date_created = db.Column(db.DateTime)
+    accepted = db.Column(db.Boolean)

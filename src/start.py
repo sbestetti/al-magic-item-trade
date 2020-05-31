@@ -110,12 +110,23 @@ def run_tests():
     db.session.commit()
 
     # Query tests
-    my_chars = Character.query.filter_by(user=new_user_1)
+
+    # Characters by user
+    my_chars = Character.query.filter_by(user=new_user_2).all()
+    print(my_chars)
+
+    # Items for all characters of a specifc user
     items = list()
     for char in my_chars:
         for item in char.items:
-            items.append(item.name)
-    print(items)
+            items.append(item)
+
+    # Items with offers
+    offers = list()
+    for i in items:
+        _ = Offer.query.filter_by(wanted_item=i.item_id).all()
+        offers.append(_)
+    print(offers)
 
     return "Finished", 200
 

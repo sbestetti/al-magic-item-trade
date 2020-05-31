@@ -25,6 +25,9 @@ class User(db.Model):
 
     characters = db.relationship('Character', backref='character', lazy=True)
 
+    def __repr__(self):
+        return f"<USER> {self.user_id}: {self.email}"
+
 
 class Character(db.Model):
     character_id = db.Column(db.Integer, primary_key=True)
@@ -37,6 +40,9 @@ class Character(db.Model):
 
     user = db.relationship("User", backref=db.backref("user"), lazy=True)
     items = db.relationship("Item", secondary=inventory, lazy="subquery")
+
+    def __repr__(self):
+        return f"<CHARACTER> {self.character_id}: {self.name}"
 
 
 class Item(db.Model):
@@ -52,6 +58,9 @@ class Item(db.Model):
         "Character",
         secondary=inventory,
         lazy="subquery")
+
+    def __repr__(self):
+        return f"<ITEM_CLASS> {self.item_id}: {self.name}"
 
 
 class Offer(db.Model):
@@ -69,3 +78,6 @@ class Offer(db.Model):
 
     date_created = db.Column(db.DateTime)
     accepted = db.Column(db.Boolean)
+
+    def __repr__(self):
+        return f"<OFFER> {self.offer_id}"

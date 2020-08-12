@@ -26,3 +26,8 @@ for i in items:
     offers.append(_)
 print(offers)
 ```
+
+## Running the app:
+
+Go to the SRC directory and run using GUnicorn:
+`gunicorn -w 4 start`

@@ -1,18 +1,18 @@
-from flask import Flask, jsonify
+from flask import Flask
 
-from models import db
+from views import index, register
 
 
 def get_app():
     app = Flask(__name__)
-    app.config.from_pyfile("./settings.py")
 
-    db.init_app(app)
+    app.config["SECRET_KEY"] = "secret"
+
+    app.register_blueprint(index.bp)
+    app.register_blueprint(register.bp)
 
     @app.route("/healthz")
     def healthz():
-        return jsonify({
-            "Status": "OK"
-        }), 200
+        return "OK", 200
 
     return app

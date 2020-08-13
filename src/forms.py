@@ -1,6 +1,6 @@
 from flask_wtf import Form
 
-from wtforms import StringField, PasswordField, validators
+from wtforms import StringField, PasswordField, SubmitField, validators
 
 
 class Registration_Form(Form):
@@ -15,3 +15,4 @@ class Registration_Form(Form):
         [validators.equal_to("confirm_password", "Passwords don't match")]
         )
     confirm_password = PasswordField("Re-type password")
+    submit = SubmitField("Submit")

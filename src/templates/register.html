@@ -6,25 +6,17 @@
     <h1>Registration page</h1>
     <form method="POST" action="/register">
         <table>
+            {% for item in form %}
+                {% if item.name != "csrf_token" and item.name != "submit" %}
+                    <tr>
+                        <td>{{ item.label }}</td>
+                        <td>{{ item }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
             <tr>
-                <td>{{ form.name.label }}</td>
-                <td>{{ form.name }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.email.label }}</td>
-                <td>{{ form.email }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.dci.label }}</td>
-                <td>{{ form.dci }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.confirm_password.label }}</td>
-                <td>{{ form.confirm_password }}</td>
+                <td></td>
+                <td>{{ form.submit }}</td>
             </tr>
         </table>
     </form>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h1>Registration page</h1>
+    <form method="POST" action="/register">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for item in form %}
+                {% if item.name != "csrf_token" and item.name != "submit" %}
+                    <tr>
+                        <td>{{ item.label }}</td>
+                        <td>{{ item }}</td>
+                        {% if item.errors %}
+                            {% for error in item.errors %}
+                                <td>{{ error }}</td>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td>{{ form.submit }}</td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

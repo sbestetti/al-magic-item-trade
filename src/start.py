@@ -1,6 +1,6 @@
 import app_factory
-import models
+import dao
 
 application = app_factory.get_app()
 
-models.db.init_app(application)
+dao.db.init_app(application)

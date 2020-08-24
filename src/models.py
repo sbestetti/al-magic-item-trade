@@ -1,6 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from dao import db
 
 
 inventory = db.Table(
@@ -19,6 +17,7 @@ class User(db.Model):
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False, unique=True)
     dci = db.Column(db.String(10), nullable=False, unique=True)
+    password = db.Column(db.String(128), nullable=False)
     active = db.Column(db.Boolean, default=True)
     verified = db.Column(db.Boolean, default=False)
     last_login = db.Column(db.DateTime)

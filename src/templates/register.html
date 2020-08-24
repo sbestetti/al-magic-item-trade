@@ -4,6 +4,11 @@
 
 {% block content %}
     <h1>Registration page</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <h4>{{ messages }}</h4>
+        {% endif %}
+    {% endwith %}
     <form method="POST" action="/register">
         {{ form.hidden_tag() }}
         <table>

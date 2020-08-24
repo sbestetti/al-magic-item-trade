@@ -6,7 +6,7 @@ from views import index, register
 def get_app():
     app = Flask(__name__)
 
-    app.config["SECRET_KEY"] = "secret"
+    app.config.from_pyfile("settings.py")
 
     app.register_blueprint(index.bp)
     app.register_blueprint(register.bp)

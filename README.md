@@ -29,5 +29,16 @@ print(offers)
 
 ## Running the app:
 
+### Create a test database:
+```python
+import app_factory
+import models
+application = app_factory.get_app()
+models.db.init_app(application)
+with application.app_context():
+    models.db.drop_all()
+    models.db.create_all()
+```
+
 Go to the SRC directory and run using GUnicorn:
 `gunicorn -w 4 start`

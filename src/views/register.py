@@ -1,4 +1,9 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import (
+    Blueprint,
+    render_template,
+    flash,
+    redirect,
+    url_for)
 
 from sqlalchemy.exc import IntegrityError
 

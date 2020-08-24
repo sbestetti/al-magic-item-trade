@@ -11,5 +11,5 @@ def add_user(user):
         db.session.add(user)
         db.session.commit()
     except IntegrityError:
-        raise IntegrityError
+        raise
     return None

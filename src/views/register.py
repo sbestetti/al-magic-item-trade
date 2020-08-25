@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 from forms import Registration_Form
 from models import User
-from dao import add_user
+from dao import db
 
 
 bp = Blueprint("register", __name__, url_prefix="/register")
@@ -23,12 +23,13 @@ def register():
             name=form.name.data,
             email=form.email.data,
             dci=form.dci.data,
-            password=form.password.data,
             active=True,
             verified=False
         )
+        user.set_password(form.password.data)
         try:
-            add_user(user)
+            db.session.add(user)
+            db.session.commit()
         except IntegrityError:
             flash("User already exists")
             return render_template("register.html", form=form)

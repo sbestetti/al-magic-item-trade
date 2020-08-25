@@ -23,6 +23,7 @@ class User(db.Model):
     active = db.Column(db.Boolean, default=True)
     verified = db.Column(db.Boolean, default=False)
     last_login = db.Column(db.DateTime)
+    authenticated = db.Column(db.Boolean, default=False)
 
     characters = db.relationship('Character', backref='character', lazy=True)
 
@@ -31,6 +32,21 @@ class User(db.Model):
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+    def is_active(self):
+        return self.active
+
+    def get_id(self):
+        return self.email
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def is_anonymous(self):
+        return False
 
 
 class Character(db.Model):

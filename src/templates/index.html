@@ -9,4 +9,18 @@
             <h4>{{ messages }}</h4>
         {% endif %}
     {% endwith %}
+    <h2>Login</h2>
+    <form method="POST" action="/index">
+        <table>
+            <tr>
+                <td>email</td>
+                <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
 {% endblock %}

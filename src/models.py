@@ -1,3 +1,5 @@
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from dao import db
 
 
@@ -26,6 +28,9 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<USER> {self.user_id}: {self.email}"
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
 
 
 class Character(db.Model):

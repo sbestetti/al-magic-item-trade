@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <h4>{{ messages }}</h4>
+        {% endif %}
+    {% endwith %}
+    <h2>Characters</h2>
+    {% if character in characters %}
+        {% for character in characters %}
+            {{character.name}}
+        {% endfor %}
+    {% else %}
+        <p>You have no characters. Create one</p>
+    {% endif %}
+{% endblock %}

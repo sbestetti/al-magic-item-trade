@@ -42,3 +42,23 @@ class Registration_Form(FlaskForm):
     confirm_password = PasswordField("Re-type password")
 
     submit = SubmitField("Submit")
+
+
+class Login_Form(FlaskForm):
+    email = StringField(
+        "Email",
+        validators=[
+            DataRequired("Email required"),
+            Length(6, 35)
+        ]
+    )
+
+    password = PasswordField(
+        "Password",
+        validators=[
+            DataRequired("Password required"),
+            Length(4, 16),
+        ]
+    )
+
+    submit = SubmitField("Submit")

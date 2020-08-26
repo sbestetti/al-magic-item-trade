@@ -1,6 +1,6 @@
 from flask import Flask
 
-from views import index, register
+from views import index, register, dashboard
 
 
 def get_app():
@@ -10,6 +10,7 @@ def get_app():
 
     app.register_blueprint(index.bp)
     app.register_blueprint(register.bp)
+    app.register_blueprint(dashboard.bp)
 
     @app.route("/healthz")
     def healthz():

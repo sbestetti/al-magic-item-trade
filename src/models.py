@@ -60,6 +60,7 @@ class Character(db.Model):
 
     user = db.relationship("User", backref=db.backref("user"), lazy=True)
     items = db.relationship("Item", secondary=inventory, lazy="subquery")
+    levels = db.relationship("Level", backref=db.backref("character"))
 
     def __repr__(self):
         return f"<CHARACTER> {self.character_id}: {self.name}"
@@ -101,3 +102,14 @@ class Offer(db.Model):
 
     def __repr__(self):
         return f"<OFFER> {self.offer_id}"
+
+
+class Level(db.Model):
+    level_id = db.Column(db.Integer, primary_key=True)
+    class_ = db.Column(db.String(80), nullable=False)
+    levels = db.Column(db.Integer, nullable=False)
+
+    character_id = db.Column(
+        db.Integer,
+        db.ForeignKey(Character.character_id),
+        nullable=False)

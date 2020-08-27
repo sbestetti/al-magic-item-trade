@@ -10,11 +10,14 @@
         {% endif %}
     {% endwith %}
     <h2>Characters</h2>
-    {% if character in characters %}
-        {% for character in characters %}
-            {{character.name}}
-        {% endfor %}
+    {% if characters %}
+        <ul>
+            {% for character in characters %}
+                <li>{{character.name}}</li>
+            {% endfor %}
+        </ul>
     {% else %}
-        <p>You have no characters. Create one</p>
+        <p>You have no characters.</p>
     {% endif %}
+    <p><a href="/dashboard/add_char">Create new character</a></p>
 {% endblock %}

@@ -41,6 +41,7 @@ class TestMain(unittest.TestCase):
             # Creating test characters
             new_character_1 = Character(
                 name="Tinemir",
+                race="Elf"
                 )
             new_character_1.levels.append(Level(class_="ranger", levels=5))
             new_character_1.levels.append(Level(class_="rogue", levels=4))
@@ -48,11 +49,13 @@ class TestMain(unittest.TestCase):
 
             new_character_2 = Character(
                 name="Uther",
+                race="Human"
             )
             new_character_2.levels.append(Level(class_="cleric", levels=15))
 
             new_character_3 = Character(
                 name="Rosquette",
+                race="Halfling"
             )
             new_character_3.levels.append(Level(class_="barbarian", levels=4))
             new_character_3.levels.append(Level(class_="fighter", levels=6))

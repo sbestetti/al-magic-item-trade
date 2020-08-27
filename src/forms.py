@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
@@ -62,3 +62,30 @@ class Login_Form(FlaskForm):
     )
 
     submit = SubmitField("Submit")
+
+
+class Character_Form(FlaskForm):
+    name = StringField(
+        "Name",
+        validators=[
+            DataRequired("Name required"),
+            Length(3, 60)
+        ]
+    )
+    main_class = SelectField(
+        "Main class",
+        choices=[
+            ("Barbarian", "Barbarian"),
+            ("Bard", "Bard"),
+            ("Cleric", "Cleric"),
+            ("Druid", "Druid"),
+            ("Fighter", "Fighter"),
+            ("Monk", "Monk"),
+            ("Paladin", "Paladin"),
+            ("Ranger", "Ranger"),
+            ("Rogue", "Rogue"),
+            ("Sorcerer", "Sorcerer"),
+            ("Warlock", "Warlock"),
+            ("Wizard", "Wizard")
+        ]
+    )

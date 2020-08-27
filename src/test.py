@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime
 
 import app_factory
-from models import db, User, Character, Item, Offer
+from models import db, User, Character, Item, Offer, Level
 
 
 class TestMain(unittest.TestCase):
@@ -27,6 +27,7 @@ class TestMain(unittest.TestCase):
                 verified=False,
                 last_login=datetime.now()
             )
+            new_user_1.set_password("123456")
             new_user_2 = User(
                 name="Rosca",
                 email="rosca@email.com",
@@ -35,19 +36,26 @@ class TestMain(unittest.TestCase):
                 verified=False,
                 last_login=datetime.now()
                 )
+            new_user_2.set_password("123456")
 
             # Creating test characters
             new_character_1 = Character(
                 name="Tinemir",
                 )
+            new_character_1.levels.append(Level(class_="ranger", levels=5))
+            new_character_1.levels.append(Level(class_="rogue", levels=4))
+            new_character_1.levels.append(Level(class_="fighter", levels=6))
 
             new_character_2 = Character(
                 name="Uther",
             )
+            new_character_2.levels.append(Level(class_="cleric", levels=15))
 
             new_character_3 = Character(
                 name="Rosquette",
             )
+            new_character_3.levels.append(Level(class_="barbarian", levels=4))
+            new_character_3.levels.append(Level(class_="fighter", levels=6))
 
             # Creating test items
             new_item_1 = Item(

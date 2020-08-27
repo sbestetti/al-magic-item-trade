@@ -1,7 +1,13 @@
 from flask_wtf import FlaskForm
 
-from wtforms import StringField, PasswordField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms import (
+    StringField,
+    PasswordField,
+    SubmitField,
+    SelectField,
+    IntegerField
+    )
+from wtforms.validators import DataRequired, Length, EqualTo, NumberRange
 
 
 class Registration_Form(FlaskForm):
@@ -89,3 +95,26 @@ class Character_Form(FlaskForm):
             ("Wizard", "Wizard")
         ]
     )
+
+    level = IntegerField("Level", validators=[
+        NumberRange(1, 20, "Between 1 and 20")
+    ])
+
+    race = SelectField(
+        "Race",
+        choices=[
+            ("Dragonborn", "Dragonborn"),
+            ("Dwarf", "Dwarf"),
+            ("Elf", "Elf"),
+            ("Gnome", "Gnome"),
+            ("Half-elf", "Half-elf"),
+            ("Halfling", "Halfling"),
+            ("Hal-orc", "Hal-orc"),
+            ("Human", "Human"),
+            ("Tiefling", "Tiefling"),
+            ("Sorcerer", "Sorcerer"),
+            ("Orc of Exandria", "Orc of Exandria")
+        ]
+    )
+
+    submit = SubmitField("Create")

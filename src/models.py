@@ -73,7 +73,7 @@ class Item(db.Model):
     item_model = db.relationship("Item_Model", back_populates="items")
 
     def __repr__(self):
-        return f"<ITEM> {self.item_id}: {self.name}"
+        return f"<ITEM> {self.item_id}"
 
 
 class Offer(db.Model):

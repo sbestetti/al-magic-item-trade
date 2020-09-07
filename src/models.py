@@ -3,18 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from dao import db
 
 
-inventory = db.Table(
-    "inventory",
-    db.Column("inventory_id", db.Integer, primary_key=True),
-    db.Column(
-        "character_id",
-        db.Integer,
-        db.ForeignKey("character.character_id")),
-    db.Column("item_id", db.Integer, db.ForeignKey("item.item_id")),
-)
-
-
 class User(db.Model):
+    __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False, unique=True)
@@ -25,7 +15,8 @@ class User(db.Model):
     last_login = db.Column(db.DateTime)
     authenticated = db.Column(db.Boolean, default=False)
 
-    characters = db.relationship('Character', backref='character', lazy=True)
+    # Relationship properties
+    items = db.relationship("Item", back_populates="user")
 
     def __repr__(self):
         return f"<USER> {self.user_id}: {self.email}"
@@ -49,26 +40,9 @@ class User(db.Model):
         return False
 
 
-class Character(db.Model):
-    character_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    race = db.Column(db.String(80), nullable=False)
-
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey(User.user_id),
-        nullable=False)
-
-    user = db.relationship("User", backref=db.backref("user"), lazy=True)
-    items = db.relationship("Item", secondary=inventory, lazy="subquery")
-    levels = db.relationship("Level", backref=db.backref("character"))
-
-    def __repr__(self):
-        return f"<CHARACTER> {self.character_id}: {self.name}"
-
-
-class Item(db.Model):
-    item_id = db.Column(db.Integer, primary_key=True)
+class Item_Model(db.Model):
+    __tablename__ = "item_models"
+    item_model_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     type_ = db.Column(db.String(80), nullable=False)
     rarity = db.Column(db.String(30), nullable=False)
@@ -76,18 +50,38 @@ class Item(db.Model):
     notes = db.Column(db.String(300), nullable=False)
     source = db.Column(db.String(10), nullable=False)
 
-    characters = db.relationship(
-        "Character",
-        secondary=inventory,
-        lazy="subquery")
+    # Items mapping
+    items = db.relationship("Item", back_populates="item_model")
 
     def __repr__(self):
         return f"<ITEM_CLASS> {self.item_id}: {self.name}"
 
 
+class Item(db.Model):
+    __tablename__ = "items"
+    item_id = db.Column(db.Integer, primary_key=True)
+
+    # User mapping
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user = db.relationship("User", back_populates="items")
+
+    # Item mapping
+    item_model_id = db.Column(
+        db.Integer,
+        db.ForeignKey('item_models.item_model_id')
+        )
+    item_model = db.relationship("Item_Model", back_populates="items")
+
+    def __repr__(self):
+        return f"<ITEM> {self.item_id}: {self.name}"
+
+
 class Offer(db.Model):
     offer_id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime)
+    status = db.Column(db.String(50))
 
+    # Relationship properties
     offered_item = db.Column(
         db.Integer,
         db.ForeignKey(Item.item_id),
@@ -98,19 +92,5 @@ class Offer(db.Model):
         db.ForeignKey(Item.item_id),
         nullable=False)
 
-    date_created = db.Column(db.DateTime)
-    accepted = db.Column(db.Boolean)
-
     def __repr__(self):
         return f"<OFFER> {self.offer_id}"
-
-
-class Level(db.Model):
-    level_id = db.Column(db.Integer, primary_key=True)
-    class_ = db.Column(db.String(80), nullable=False)
-    levels = db.Column(db.Integer, nullable=False)
-
-    character_id = db.Column(
-        db.Integer,
-        db.ForeignKey(Character.character_id),
-        nullable=False)

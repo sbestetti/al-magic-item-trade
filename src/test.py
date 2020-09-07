@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime
 
 import app_factory
-from models import db, User, Character, Item, Offer, Level
+from models import db, User, Item_Model, Item
 
 
 class TestMain(unittest.TestCase):
@@ -28,6 +28,7 @@ class TestMain(unittest.TestCase):
                 last_login=datetime.now()
             )
             new_user_1.set_password("123456")
+
             new_user_2 = User(
                 name="Rosca",
                 email="rosca@email.com",
@@ -38,75 +39,71 @@ class TestMain(unittest.TestCase):
                 )
             new_user_2.set_password("123456")
 
-            # Creating test characters
-            new_character_1 = Character(
-                name="Tinemir",
-                race="Elf"
-                )
-            new_character_1.levels.append(Level(class_="ranger", levels=5))
-            new_character_1.levels.append(Level(class_="rogue", levels=4))
-            new_character_1.levels.append(Level(class_="fighter", levels=6))
-
-            new_character_2 = Character(
-                name="Uther",
-                race="Human"
-            )
-            new_character_2.levels.append(Level(class_="cleric", levels=15))
-
-            new_character_3 = Character(
-                name="Rosquette",
-                race="Halfling"
-            )
-            new_character_3.levels.append(Level(class_="barbarian", levels=4))
-            new_character_3.levels.append(Level(class_="fighter", levels=6))
-
-            # Creating test items
-            new_item_1 = Item(
+            # Creating test item models
+            new_item_model_1 = Item_Model(
                 name="Magic Sword",
                 type_="Weapon",
                 rarity="Unique",
                 attuned=True,
                 notes="Bleeds",
-                source="DMG"
+                source="DMG",
             )
 
-            new_item_2 = Item(
+            new_item_model_2 = Item_Model(
                 name="Magic Staff",
                 type_="Weapon",
                 rarity="Rare",
                 attuned=True,
                 notes="Bleeds",
-                source="DMG"
+                source="DMG",
             )
 
-            new_item_3 = Item(
+            new_item_model_3 = Item_Model(
                 name="Magic beads",
                 type_="Weapon",
                 rarity="Uncommon",
                 attuned=True,
                 notes="Bleeds",
-                source="DMG"
+                source="DMG",
+            )
+
+            # Creating test items
+            new_item_1 = Item(
+                user=new_user_1,
+                item_model=new_item_model_1
+            )
+            new_item_2 = Item(
+                user=new_user_1,
+                item_model=new_item_model_2
+            )
+            new_item_3 = Item(
+                user=new_user_2,
+                item_model=new_item_model_3
             )
 
             # Commiting all objects to DB
-            new_character_1.items.append(new_item_1)
-            new_character_1.items.append(new_item_2)
-            new_character_3.items.append(new_item_3)
-            new_user_1.characters.append(new_character_1)
-            new_user_1.characters.append(new_character_2)
-            new_user_2.characters.append(new_character_3)
-            db.session.add(new_user_1)
-            db.session.add(new_user_2)
+            db.session.add_all(
+                [
+                    new_user_1,
+                    new_user_2,
+                    new_item_model_1,
+                    new_item_model_2,
+                    new_item_model_3,
+                    new_item_1,
+                    new_item_2,
+                    new_item_3,
+                ]
+            )
             db.session.commit()
 
             # Creating Offers
-            new_offer_1 = Offer(
-                offered_item=new_item_1.item_id,
-                wanted_item=new_item_3.item_id,
-                date_created=datetime.now(),
-            )
-            db.session.add(new_offer_1)
-            db.session.commit()
+            # new_offer_1 = Offer(
+            #     offered_item=new_item_1.item_id,
+            #     wanted_item=new_item_3.item_id,
+            #     date_created=datetime.now(),
+            # )
+            # db.session.add(new_offer_1)
+            # db.session.commit()
 
     def test_status(self):
         """

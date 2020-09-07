@@ -4,10 +4,8 @@ from wtforms import (
     StringField,
     PasswordField,
     SubmitField,
-    SelectField,
-    IntegerField
     )
-from wtforms.validators import DataRequired, Length, EqualTo, NumberRange
+from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class Registration_Form(FlaskForm):
@@ -68,53 +66,3 @@ class Login_Form(FlaskForm):
     )
 
     submit = SubmitField("Submit")
-
-
-class Character_Form(FlaskForm):
-    name = StringField(
-        "Name",
-        validators=[
-            DataRequired("Name required"),
-            Length(3, 60)
-        ]
-    )
-    main_class = SelectField(
-        "Main class",
-        choices=[
-            ("Barbarian", "Barbarian"),
-            ("Bard", "Bard"),
-            ("Cleric", "Cleric"),
-            ("Druid", "Druid"),
-            ("Fighter", "Fighter"),
-            ("Monk", "Monk"),
-            ("Paladin", "Paladin"),
-            ("Ranger", "Ranger"),
-            ("Rogue", "Rogue"),
-            ("Sorcerer", "Sorcerer"),
-            ("Warlock", "Warlock"),
-            ("Wizard", "Wizard")
-        ]
-    )
-
-    level = IntegerField("Level", validators=[
-        NumberRange(1, 20, "Between 1 and 20")
-    ])
-
-    race = SelectField(
-        "Race",
-        choices=[
-            ("Dragonborn", "Dragonborn"),
-            ("Dwarf", "Dwarf"),
-            ("Elf", "Elf"),
-            ("Gnome", "Gnome"),
-            ("Half-elf", "Half-elf"),
-            ("Halfling", "Halfling"),
-            ("Hal-orc", "Hal-orc"),
-            ("Human", "Human"),
-            ("Tiefling", "Tiefling"),
-            ("Sorcerer", "Sorcerer"),
-            ("Orc of Exandria", "Orc of Exandria")
-        ]
-    )
-
-    submit = SubmitField("Create")

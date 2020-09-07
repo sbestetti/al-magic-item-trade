@@ -130,3 +130,5 @@ dmypy.json
 .vscode/settings.json
 src/settings.py
 src/test.db
+.DS_Store
+src/.DS_Store

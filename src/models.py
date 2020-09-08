@@ -54,12 +54,13 @@ class Item_Model(db.Model):
     items = db.relationship("Item", back_populates="item_model")
 
     def __repr__(self):
-        return f"<ITEM_CLASS> {self.item_id}: {self.name}"
+        return f"<ITEM_CLASS> {self.item_model_id}: {self.name}"
 
 
 class Item(db.Model):
     __tablename__ = "items"
     item_id = db.Column(db.Integer, primary_key=True)
+    character = db.Column(db.String(80))
 
     # User mapping
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))

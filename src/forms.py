@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import (
     StringField,
     PasswordField,
+    SelectField,
     SubmitField,
     )
 from wtforms.validators import DataRequired, Length, EqualTo
@@ -65,4 +66,10 @@ class Login_Form(FlaskForm):
         ]
     )
 
+    submit = SubmitField("Submit")
+
+
+class New_Item_Form(FlaskForm):
+    character = StringField("Character")
+    item = SelectField("Item", validators=[DataRequired()])
     submit = SubmitField("Submit")

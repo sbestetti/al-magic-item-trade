@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Add new item{% endblock %}
+
+{% block content %}
+    <h1>Add new item</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <h4>{{ messages }}</h4>
+        {% endif %}
+    {% endwith %}
+    <form method="POST" action="/dashboard/new_item">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for item in form %}
+                {% if item.name != "csrf_token" and item.name != "submit" %}
+                    <tr>
+                        <td>{{ item.label }}</td>
+                        <td>{{ item }}</td>
+                        {% if item.errors %}
+                            {% for error in item.errors %}
+                                <td>{{ error }}</td>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td>{{ form.submit }}</td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

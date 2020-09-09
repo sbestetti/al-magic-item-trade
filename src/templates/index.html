@@ -9,7 +9,7 @@
             <h4>{{ messages }}</h4>
         {% endif %}
     {% endwith %}
-    <h2>Login</h2>
+    <h2>Login or <a href="{{ url_for('register.register') }}">register</a></h2>
     <form method="POST" action="/">
         {{ form.hidden_tag() }}
         <table>

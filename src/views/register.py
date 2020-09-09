@@ -33,6 +33,6 @@ def register():
         except IntegrityError:
             flash("User already exists")
             return render_template("register.html", form=form)
-        flash("Please login")
+        flash("Registration successful. Please login")
         return redirect(url_for("index.index"))
     return render_template("register.html", form=form)

@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 
 from models import User, Item, Item_Model
 from forms import New_Item_Form
+from dao import db
 
 
 bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
@@ -28,4 +29,15 @@ def new_item():
         item_options.append(item.name)
     form = New_Item_Form()
     form.item.choices = item_options
+    if form.validate_on_submit():
+        item_model = Item_Model.query.filter_by(name=form.item.data).first()
+        new_item = Item(
+            character=form.character.data,
+            user=current_user,
+            item_model=item_model
+        )
+        db.session.add(new_item)
+        db.session.commit()
+        flash("Item created")
+        return redirect(url_for("dashboard.dashboard"))
     return render_template("new_item.html", form=form)

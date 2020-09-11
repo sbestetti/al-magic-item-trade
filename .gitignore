@@ -132,3 +132,6 @@ src/settings.py
 src/test.db
 .DS_Store
 src/.DS_Store
+
+# Personal tools and scripts
+tools/

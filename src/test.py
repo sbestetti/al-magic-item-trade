@@ -47,6 +47,7 @@ class TestMain(unittest.TestCase):
                 attuned=True,
                 notes="Bleeds",
                 source="DMG",
+                table="a",
             )
 
             new_item_model_2 = Item_Model(
@@ -56,6 +57,7 @@ class TestMain(unittest.TestCase):
                 attuned=True,
                 notes="Bleeds",
                 source="DMG",
+                table="b",
             )
 
             new_item_model_3 = Item_Model(
@@ -65,21 +67,25 @@ class TestMain(unittest.TestCase):
                 attuned=True,
                 notes="Bleeds",
                 source="DMG",
+                table="a",
             )
 
-            # Creating test items
-            new_item_1 = Item(
-                user=new_user_1,
-                item_model=new_item_model_1
-            )
-            new_item_2 = Item(
-                user=new_user_1,
-                item_model=new_item_model_2
-            )
-            new_item_3 = Item(
-                user=new_user_2,
-                item_model=new_item_model_3
-            )
+            # # Creating test items
+            # new_item_1 = Item(
+            #     user=new_user_1,
+            #     item_model=new_item_model_1,
+            #     character="Tin",
+            # )
+            # new_item_2 = Item(
+            #     user=new_user_1,
+            #     item_model=new_item_model_2,
+            #     character="Tin",
+            # )
+            # new_item_3 = Item(
+            #     user=new_user_2,
+            #     item_model=new_item_model_3,
+            #     character="Jon",
+            # )
 
             # Commiting all objects to DB
             db.session.add_all(

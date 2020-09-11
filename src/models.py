@@ -44,11 +44,12 @@ class Item_Model(db.Model):
     __tablename__ = "item_models"
     item_model_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    type_ = db.Column(db.String(80), nullable=False)
-    rarity = db.Column(db.String(30), nullable=False)
+    table = db.Column(db.String(1), nullable=False)
+    type_ = db.Column(db.String(13), nullable=False)
+    rarity = db.Column(db.String(1), nullable=False)
     attuned = db.Column(db.Boolean, nullable=False)
-    notes = db.Column(db.String(300), nullable=False)
     source = db.Column(db.String(10), nullable=False)
+    notes = db.Column(db.String(300))
 
     # Items mapping
     items = db.relationship("Item", back_populates="item_model")

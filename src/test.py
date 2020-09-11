@@ -15,13 +15,13 @@ class TestMain(unittest.TestCase):
         self.app = app_factory.get_app()
         with self.app.app_context():
             db.init_app(self.app)
-            db.drop_all()
-            db.create_all()
+            # db.drop_all()
+            # db.create_all()
 
             # Creating test users
             new_user_1 = User(
-                name="Sergio",
-                email="sergio@email.com",
+                name="Test User 1",
+                email="test1@email.com",
                 dci="12345678",
                 active=True,
                 verified=False,
@@ -30,8 +30,8 @@ class TestMain(unittest.TestCase):
             new_user_1.set_password("123456")
 
             new_user_2 = User(
-                name="Rosca",
-                email="rosca@email.com",
+                name="Test User 2",
+                email="test2@email.com",
                 dci="910111213",
                 active=True,
                 verified=False,
@@ -41,7 +41,7 @@ class TestMain(unittest.TestCase):
 
             # Creating test item models
             new_item_model_1 = Item_Model(
-                name="Magic Sword",
+                name="Test Model",
                 type_="Weapon",
                 rarity="Unique",
                 attuned=True,
@@ -50,42 +50,22 @@ class TestMain(unittest.TestCase):
                 table="a",
             )
 
-            new_item_model_2 = Item_Model(
-                name="Magic Staff",
-                type_="Weapon",
-                rarity="Rare",
-                attuned=True,
-                notes="Bleeds",
-                source="DMG",
-                table="b",
+            # Creating test items
+            new_item_1 = Item(
+                user=new_user_1,
+                item_model=new_item_model_1,
+                character="Tin",
             )
-
-            new_item_model_3 = Item_Model(
-                name="Magic beads",
-                type_="Weapon",
-                rarity="Uncommon",
-                attuned=True,
-                notes="Bleeds",
-                source="DMG",
-                table="a",
+            new_item_2 = Item(
+                user=new_user_1,
+                item_model=new_item_model_2,
+                character="Tin",
             )
-
-            # # Creating test items
-            # new_item_1 = Item(
-            #     user=new_user_1,
-            #     item_model=new_item_model_1,
-            #     character="Tin",
-            # )
-            # new_item_2 = Item(
-            #     user=new_user_1,
-            #     item_model=new_item_model_2,
-            #     character="Tin",
-            # )
-            # new_item_3 = Item(
-            #     user=new_user_2,
-            #     item_model=new_item_model_3,
-            #     character="Jon",
-            # )
+            new_item_3 = Item(
+                user=new_user_2,
+                item_model=new_item_model_3,
+                character="Jon",
+            )
 
             # Commiting all objects to DB
             db.session.add_all(
@@ -103,13 +83,13 @@ class TestMain(unittest.TestCase):
             db.session.commit()
 
             # Creating Offers
-            # new_offer_1 = Offer(
-            #     offered_item=new_item_1.item_id,
-            #     wanted_item=new_item_3.item_id,
-            #     date_created=datetime.now(),
-            # )
-            # db.session.add(new_offer_1)
-            # db.session.commit()
+            new_offer_1 = Offer(
+                offered_item=new_item_1.item_id,
+                wanted_item=new_item_3.item_id,
+                date_created=datetime.now(),
+            )
+            db.session.add(new_offer_1)
+            db.session.commit()
 
     def test_status(self):
         """

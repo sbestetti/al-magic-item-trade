@@ -13,7 +13,7 @@
     <h2>Your magic items</h2>
     <p><a href="{{ url_for('dashboard.new_item') }}">Add new magic item</a></p>
     {% if items|length > 0 %}
-        <table>
+        <table class="basic">
             <tr>
                 <th>Name</th>
                 <th>Type</th>
@@ -30,7 +30,6 @@
                     <td>{{item['model'].attuned}}</td>
                     <td>{{item['model'].notes}}</td>
                     <td>{{item['model'].source}}</td>
-                    <td>{{item['model'].item_id}}</td>
                 </tr>
             {% endfor %}
         </table>

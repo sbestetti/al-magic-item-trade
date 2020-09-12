@@ -1,7 +1,12 @@
-table {
-    border-collapse: collapse;
-  }
-  
-  table, th, td {
-    border: 1px solid black;
-  }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+table.basic {
+  border-collapse: collapse;
+  width: 75%;
+}
+
+table.basic th, td {
+  border: 1px solid black;
+}

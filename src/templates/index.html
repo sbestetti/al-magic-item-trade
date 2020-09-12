@@ -12,7 +12,7 @@
     <h2>Login or <a href="{{ url_for('register.register') }}">register</a></h2>
     <form method="POST" action="/">
         {{ form.hidden_tag() }}
-        <table>
+        <table class="invisible">
             {% for item in form %}
                 {% if item.name != "csrf_token" and item.name != "submit" %}
                     <tr>

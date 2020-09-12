@@ -14,16 +14,14 @@
     <p><a href="{{ url_for('dashboard.new_item') }}">Add new magic item</a></p>
     {% if items|length > 0 %}
         <table>
-            <th>
-                <tr>
-                    <td>Name</td>
-                    <td>Type</td>
-                    <td>Rarity</td>
-                    <td>Attuned</td>
-                    <td>Notes</td>
-                    <td>Source</td>
-                </tr>
-            </th>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Rarity</th>
+                <th>Attuned</th>
+                <th>Notes</th>
+                <th>Source</th>
+            </tr>
             {% for item in items %}
                 <tr>
                     <td>{{item.name}}</td>

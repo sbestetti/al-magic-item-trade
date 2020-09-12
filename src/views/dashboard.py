@@ -17,7 +17,11 @@ def dashboard():
         current_model = Item_Model.query.filter_by(
             item_model_id=item.item_model_id
             ).first()
-        items.append(current_model)
+        table_item = {
+            "model": current_model,
+            "item_id": item.item_id
+        }
+        items.append(table_item)
     return render_template("dashboard.html", user=current_user, items=items)
 
 
@@ -41,3 +45,9 @@ def new_item():
         flash("Item created")
         return redirect(url_for("dashboard.dashboard"))
     return render_template("new_item.html", form=form)
+
+
+@bp.route("/trade-item/<item_id>")
+@login_required
+def trade_item(item_id):
+    return f"Your item is {item_id}", 200

@@ -24,12 +24,13 @@
             </tr>
             {% for item in items %}
                 <tr>
-                    <td>{{item.name}}</td>
-                    <td>{{item.type_}}</td>
-                    <td>{{item.rarity}}</td>
-                    <td>{{item.attuned}}</td>
-                    <td>{{item.notes}}</td>
-                    <td>{{item.source}}</td>
+                    <td><a href="{{ url_for('dashboard.trade_item', item_id=item['item_id']) }}">{{item['model'].name}}</a></td>
+                    <td>{{item['model'].type_}}</td>
+                    <td>{{item['model'].rarity}}</td>
+                    <td>{{item['model'].attuned}}</td>
+                    <td>{{item['model'].notes}}</td>
+                    <td>{{item['model'].source}}</td>
+                    <td>{{item['model'].item_id}}</td>
                 </tr>
             {% endfor %}
         </table>

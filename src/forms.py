@@ -54,7 +54,7 @@ class Login_Form(FlaskForm):
         "Email",
         validators=[
             DataRequired("Email required"),
-            Length(6, 35)
+            Length(6, 100)
         ]
     )
 

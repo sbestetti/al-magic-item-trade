@@ -3,10 +3,9 @@ body {
 }
 
 table.basic {
-  border-collapse: collapse;
-  width: 75%;
+  border: 1px solid;
 }
 
-table.basic th, td {
-  border: 1px solid black;
+tbody.basic {
+  border: 1px solid;
 }

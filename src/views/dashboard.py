@@ -54,4 +54,12 @@ def new_item():
 @bp.route("/trade-item/<item_id>")
 @login_required
 def trade_item(item_id):
-    return f"Your item is {item_id}", 200
+    """
+    First checks if the selected magic item belongs to
+    the current logged user.
+    """
+    item = Item.query.filter_by(item_id=item_id).first()
+    if item.user == current_user:
+        return f"Your item is {item_id} and you can trade it", 200
+    else:
+        return "This items doesn't belong to your user.", 200

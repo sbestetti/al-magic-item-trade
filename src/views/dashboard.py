@@ -12,6 +12,10 @@ bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
 @bp.route("/")
 @login_required
 def dashboard():
+    """
+    This function generates an intermediary object combining the item ID
+    and the information from the item model to create rows on the Items table
+    """
     items = list()
     for item in current_user.items:
         current_model = Item_Model.query.filter_by(

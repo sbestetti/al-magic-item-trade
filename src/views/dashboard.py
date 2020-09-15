@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
+from sqlalchemy import and_
 
 from models import User, Item, Item_Model
 from forms import New_Item_Form
@@ -60,6 +61,10 @@ def trade_item(item_id):
     """
     item = Item.query.filter_by(item_id=item_id).first()
     if item.user == current_user:
-        return f"Your item is {item_id} and you can trade it", 200
+        possible_items = Item_Model.query.filter_by(
+            table=item.item_model.table,
+            rarity=item.item_model.rarity
+            ).all()
+        return render_template("possible_items.html", items=possible_items)
     else:
         return "This items doesn't belong to your user.", 200

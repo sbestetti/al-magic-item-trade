@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h1>Possible items</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <h4>{{ messages }}</h4>
+        {% endif %}
+    {% endwith %}
+    <h2>What are you looking for?</h2>
+    {% if items|length > 0 %}
+        <table class="basic">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Rarity</th>
+                <th>Table</th>
+                <th>Attuned</th>
+                <th>Notes</th>
+                <th>Source</th>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.type_}}</td>
+                    <td>{{item.rarity}}</td>
+                    <td>{{item.table}}</td>
+                    <td>{{item.attuned}}</td>
+                    <td>{{item.notes}}</td>
+                    <td>{{item.source}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>You don't have any magic items.</p>
+    {% endif %}
+{% endblock %}

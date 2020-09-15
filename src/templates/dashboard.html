@@ -18,6 +18,7 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>Rarity</th>
+                <th>Table</th>
                 <th>Attuned</th>
                 <th>Notes</th>
                 <th>Source</th>
@@ -27,6 +28,7 @@
                     <td><a href="{{ url_for('dashboard.trade_item', item_id=item['item_id']) }}">{{item['model'].name}}</a></td>
                     <td>{{item['model'].type_}}</td>
                     <td>{{item['model'].rarity}}</td>
+                    <td>{{item['model'].table}}</td>
                     <td>{{item['model'].attuned}}</td>
                     <td>{{item['model'].notes}}</td>
                     <td>{{item['model'].source}}</td>

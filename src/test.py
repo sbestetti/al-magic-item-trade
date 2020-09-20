@@ -51,6 +51,7 @@ class TestMain(unittest.TestCase):
             self.test_user_1 = User.query.filter_by(user_id=1).first()
             self.test_user_2 = User.query.filter_by(user_id=2).first()
 
+    # --------------- Page tests ---------------
     def test_status(self):
         """
         Check if health status page is returning OK
@@ -59,6 +60,14 @@ class TestMain(unittest.TestCase):
         result = client.get("/healthz")
         self.assertIn(b"OK", result.data)
 
+    def test_index_page(self):
+        response = self.test_client.get("/")
+        self.assertIn(
+            b"Welcome to Adventure League's Magic Item trade",
+            response.data
+            )
+
+    # --------------- Users tests ---------------
     def test_login_module(self):
         """
         Check if the function used by the flask-login plugin
@@ -73,7 +82,6 @@ class TestMain(unittest.TestCase):
         Test User's class representation
         """
         with self.context:
-            # Test representation
             expected_repr = "<USER> 1: test1@email.com"
             self.assertTrue(self.test_user_1.__repr__() == expected_repr)
 
@@ -116,14 +124,8 @@ class TestMain(unittest.TestCase):
         with self.context:
             self.assertFalse(self.test_user_1.is_anonymous())
 
-    def test_index_page(self):
-        response = self.test_client.get("/")
-        self.assertIn(
-            b"Welcome to Adventure League's Magic Item trade",
-            response.data
-            )
-
-    def test_dashboard_page(self):
+    # --------------- Login tests ---------------
+    def test_login_correct(self):
         credentials = dict(
             email="test1@email.com",
             password="123456"
@@ -133,4 +135,22 @@ class TestMain(unittest.TestCase):
             data=credentials,
             follow_redirects=True
             )
-        self.assertIn(b"Welcome Test User 1", response.data)
+        self.assertIn(b"Hello Test User 1", response.data)
+
+    def test_login_incorrect(self):
+        credentials = dict(email="test1@email.com", password="wrong_password")
+        response = self.test_client.post(
+            "/",
+            data=credentials,
+            follow_redirects=True
+            )
+        self.assertIn(b"Wrong username or password", response.data)
+
+    def test_logout(self):
+        credentials = dict(email="test1@email.com", password="123456")
+        self.test_client.post("/", data=credentials, follow_redirects=True)
+        response = self.test_client.get("/logout", follow_redirects=True)
+        self.assertIn(
+            b"Welcome to Adventure League's Magic Item trade",
+            response.data
+            )

@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime
 
 import start
-from models import db, User
+from models import db, User, Offer, Item
 import login
 
 
@@ -44,8 +44,65 @@ class TestMain(unittest.TestCase):
             )
             test_user_2.set_password("123456")
 
+            test_item_1 = Item(
+                name="Teste Item 1",
+                table="a",
+                type_="sword",
+                rarity="common",
+                attuned=True,
+                source="dmg"
+            )
+            test_item_2 = Item(
+                name="Teste Item 2",
+                table="a",
+                type_="shield",
+                rarity="rare",
+                attuned=False,
+                source="dmg"
+            )
+            test_item_3 = Item(
+                name="Teste Item 3",
+                table="b",
+                type_="cloak",
+                rarity="common",
+                attuned=True,
+                source="dmg"
+            )
+            test_item_4 = Item(
+                name="Teste Item 4",
+                table="b",
+                type_="tome",
+                rarity="rare",
+                attuned=False,
+                source="dmg"
+            )
+
+            test_offer_1 = Offer(
+                date_created=datetime.now(),
+                status="pending",
+                sending_user=test_user_1,
+                receiving_user=test_user_2,
+                offered_item=test_item_1,
+                wanted_item=test_item_2
+            )
+
+            test_offer_2 = Offer(
+                date_created=datetime.now(),
+                status="pending",
+                sending_user=test_user_2,
+                receiving_user=test_user_1,
+                offered_item=test_item_3,
+                wanted_item=test_item_4
+            )
+
+            db.session.add(test_item_1)
+            db.session.add(test_item_2)
+            db.session.add(test_item_3)
+            db.session.add(test_item_4)
             db.session.add(test_user_1)
             db.session.add(test_user_2)
+            db.session.add(test_offer_1)
+            db.session.add(test_offer_2)
             db.session.commit()
 
             self.test_user_1 = User.query.filter_by(user_id=1).first()
@@ -154,3 +211,5 @@ class TestMain(unittest.TestCase):
             b"Welcome to Adventure League's Magic Item trade",
             response.data
             )
+
+    # --------------- Offer tests ---------------

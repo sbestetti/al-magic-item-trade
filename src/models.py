@@ -57,27 +57,29 @@ class Offer(db.Model):
 
     # Relationship properties
     sending_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    receiving_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     sending_user = db.relationship("User", foreign_keys=[sending_user_id])
+
+    receiving_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     receiving_user = db.relationship("User", foreign_keys=[receiving_user_id])
 
-    offered_item = db.Column(
-        db.Integer,
-        db.ForeignKey(Item.item_id),
-        nullable=False)
+    offered_item_id = db.Column(db.Integer, db.ForeignKey("items.item_id"))
+    offered_item = db.relationship("Item", foreign_keys=[offered_item_id])
+
+    wanted_item_id = db.Column(db.Integer, db.ForeignKey("items.item_id"))
+    wanted_item = db.relationship("Item", foreign_keys=[wanted_item_id])
 
 
-class Wanted_Items(db.Model):
-    __tablename__ = "wanted_items"
-    wanted_item_id = db.Column(db.Integer, primary_key=True)
+# class Wanted_Items(db.Model):
+#     __tablename__ = "wanted_items"
+#     wanted_item_id = db.Column(db.Integer, primary_key=True)
 
-    # Relationship properties
-    offer_id = db.Column(
-        db.Integer,
-        db.ForeignKey("offers.offer_id")
-    )
+#     # Relationship properties
+#     offer_id = db.Column(
+#         db.Integer,
+#         db.ForeignKey("offers.offer_id")
+#     )
 
-    item_id = db.Column(
-        db.Integer,
-        db.ForeignKey("items.item_id")
-    )
+#     item_id = db.Column(
+#         db.Integer,
+#         db.ForeignKey("items.item_id")
+#     )

@@ -10,20 +10,17 @@
         {% endif %}
     {% endwith %}
     <p>Hello {{user.name}}</p>
-    <h2>Your magic items</h2>
-    <p>Click on an item name to trade it or <a href="{{ url_for('dashboard.new_item') }}">add new magic item</a></p>
-    {% if items|length > 0 %}
+    <h2>Your offers</h2>
+    <h3>Sent</h3>
+    {% if sent_offers|length > 0 %}
         <table class="basic">
             <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Rarity</th>
-                <th>Table</th>
-                <th>Attuned</th>
-                <th>Notes</th>
-                <th>Source</th>
+                <th>Date</th>
+                <th>Item requested</th>
+                <th>Item offered</th>
+                <th>Status</th>
             </tr>
-            {% for item in items %}
+            {% for item in sent_offers %}
                 <tr>
                     <td><a href="{{ url_for('dashboard.trade_item', item_id=item['item_id']) }}">{{item['model'].name}}</a></td>
                     <td>{{item['model'].type_}}</td>

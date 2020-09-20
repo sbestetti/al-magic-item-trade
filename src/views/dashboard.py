@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from sqlalchemy import and_
 
-from models import User, Item, Item_Model
+from models import User, Item, Offer, Wanted_Items
 from forms import New_Item_Form
 from dao import db
 
@@ -17,17 +17,26 @@ def dashboard():
     This function generates an intermediary object combining the item ID
     and the information from the item model to create rows on the Items table
     """
-    items = list()
-    for item in current_user.items:
-        current_model = Item_Model.query.filter_by(
-            item_model_id=item.item_model_id
-            ).first()
+    offers = list()
+    sent_offers = Offer.query.filter_by(sending_user_id=current_user.user_id)
+    received_offers = Offer.query.filter_by(receiving_user_id=current_user.user_id)
+    for line_item in sent_offers:
+        requested_item = Wanted_Items.query.filter_by(offer_id=line_item.offer_id).first()
+        requested_item_name = Item.query.filter_by(item_id=)
         table_item = {
-            "model": current_model,
-            "item_id": item.item_id
+            "date": line_item.date_created,
+            "item_requested": requested_item.name 
         }
-        items.append(table_item)
-    return render_template("dashboard.html", user=current_user, items=items)
+    # for item in current_user.items:
+    #     current_model = Item_Model.query.filter_by(
+    #         item_model_id=item.item_model_id
+    #         ).first()
+    #     table_item = {
+    #         "model": current_model,
+    #         "item_id": item.item_id
+    #     }
+    #     items.append(table_item)
+    return render_template("dashboard.html", user=current_user, sent_offers=sent_offers)
 
 
 @bp.route("/new_item", methods=["POST", "GET"])

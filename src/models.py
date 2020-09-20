@@ -15,9 +15,6 @@ class User(db.Model):
     last_login = db.Column(db.DateTime)
     authenticated = db.Column(db.Boolean, default=False)
 
-    # Relationship properties
-    items = db.relationship("Item", back_populates="user")
-
     def __repr__(self):
         return f"<USER> {self.user_id}: {self.email}"
 
@@ -40,9 +37,9 @@ class User(db.Model):
         return False
 
 
-class Item_Model(db.Model):
-    __tablename__ = "item_models"
-    item_model_id = db.Column(db.Integer, primary_key=True)
+class Item(db.Model):
+    __tablename__ = "items"
+    item_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     table = db.Column(db.String(1), nullable=False)
     type_ = db.Column(db.String(13), nullable=False)
@@ -51,48 +48,36 @@ class Item_Model(db.Model):
     source = db.Column(db.String(10), nullable=False)
     notes = db.Column(db.String(300))
 
-    # Items mapping
-    items = db.relationship("Item", back_populates="item_model")
-
-    def __repr__(self):
-        return f"<ITEM_CLASS> {self.item_model_id}: {self.name}"
-
-
-class Item(db.Model):
-    __tablename__ = "items"
-    item_id = db.Column(db.Integer, primary_key=True)
-    character = db.Column(db.String(80))
-
-    # User mapping
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    user = db.relationship("User", back_populates="items")
-
-    # Item mapping
-    item_model_id = db.Column(
-        db.Integer,
-        db.ForeignKey('item_models.item_model_id')
-        )
-    item_model = db.relationship("Item_Model", back_populates="items")
-
-    def __repr__(self):
-        return f"<ITEM> {self.item_id}"
-
 
 class Offer(db.Model):
+    __tablename__ = "offers"
     offer_id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime)
     status = db.Column(db.String(50))
 
     # Relationship properties
+    sending_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    receiving_user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    sending_user = db.relationship("User", foreign_keys=[sending_user_id])
+    receiving_user = db.relationship("User", foreign_keys=[receiving_user_id])
+
     offered_item = db.Column(
         db.Integer,
         db.ForeignKey(Item.item_id),
         nullable=False)
 
-    wanted_item = db.Column(
-        db.Integer,
-        db.ForeignKey(Item.item_id),
-        nullable=False)
 
-    def __repr__(self):
-        return f"<OFFER> {self.offer_id}"
+class Wanted_Items(db.Model):
+    __tablename__ = "wanted_items"
+    wanted_item_id = db.Column(db.Integer, primary_key=True)
+
+    # Relationship properties
+    offer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("offers.offer_id")
+    )
+
+    item_id = db.Column(
+        db.Integer,
+        db.ForeignKey("items.item_id")
+    )

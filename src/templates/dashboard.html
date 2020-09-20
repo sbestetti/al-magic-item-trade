@@ -20,19 +20,37 @@
                 <th>Item offered</th>
                 <th>Status</th>
             </tr>
-            {% for item in sent_offers %}
+            {% for offer in sent_offers %}
                 <tr>
-                    <td><a href="{{ url_for('dashboard.trade_item', item_id=item['item_id']) }}">{{item['model'].name}}</a></td>
-                    <td>{{item['model'].type_}}</td>
-                    <td>{{item['model'].rarity}}</td>
-                    <td>{{item['model'].table}}</td>
-                    <td>{{item['model'].attuned}}</td>
-                    <td>{{item['model'].notes}}</td>
-                    <td>{{item['model'].source}}</td>
+                    <td>{{offer.date_created}}</td>
+                    <td>{{offer.wanted_item.name}}</td>
+                    <td>{{offer.offered_item.name}}</td>
+                    <td>{{offer.status}}</td>
                 </tr>
             {% endfor %}
         </table>
     {% else %}
-        <p>You don't have any magic items.</p>
+        <p>You don't have open offers</p>
+    {% endif %}
+    <h3>Received</h3>
+    {% if received_offers|length > 0 %}
+        <table class="basic">
+            <tr>
+                <th>Date</th>
+                <th>Item requested</th>
+                <th>Item offered</th>
+                <th>Status</th>
+            </tr>
+            {% for offer in received_offers %}
+                <tr>
+                    <td>{{offer.date_created}}</td>
+                    <td>{{offer.wanted_item.name}}</td>
+                    <td>{{offer.offered_item.name}}</td>
+                    <td>{{offer.status}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>You haven't received any offers. Sorry!</p>
     {% endif %}
 {% endblock %}

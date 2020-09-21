@@ -25,7 +25,7 @@ class TestMain(unittest.TestCase):
             test_user_1 = User(
                 name="Test User 1",
                 email="test1@email.com",
-                dci="1234",
+                dci="123456",
                 active=True,
                 verified=True,
                 last_login=datetime.now(),
@@ -36,7 +36,7 @@ class TestMain(unittest.TestCase):
             test_user_2 = User(
                 name="Test User 2",
                 email="test2@email.com",
-                dci="5678",
+                dci="567890",
                 active=True,
                 verified=True,
                 last_login=datetime.now(),

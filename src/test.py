@@ -124,6 +124,13 @@ class TestMain(unittest.TestCase):
             response.data
             )
 
+    def test_registration_page(self):
+        response = self.test_client.get("/register", follow_redirects=True)
+        self.assertIn(
+            b"Registration page",
+            response.data
+            )
+
     # --------------- Users tests ---------------
     def test_login_module(self):
         """
@@ -212,4 +219,33 @@ class TestMain(unittest.TestCase):
             response.data
             )
 
-    # --------------- Offer tests ---------------
+    # --------------- User registration test ---------------
+    def test_user_registration_success(self):
+        user_data = dict(
+            name="Test User 3",
+            email="test3@email.com",
+            dci="901234",
+            password="123456",
+            confirm_password="123456"
+        )
+        response = self.test_client.post(
+            "/register",
+            data=user_data,
+            follow_redirects=True
+        )
+        self.assertIn(b"Registration successful. Please login", response.data)
+
+    def test_user_registration_user_already_exists(self):
+        user_data = dict(
+            name="Test User 1",
+            email="test1@email.com",
+            dci="123456",
+            password="123456",
+            confirm_password="123456"
+        )
+        response = self.test_client.post(
+            "/register",
+            data=user_data,
+            follow_redirects=True
+        )
+        self.assertIn(b"User already exists", response.data)

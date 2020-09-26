@@ -65,21 +65,16 @@ class Offer(db.Model):
     offered_item_id = db.Column(db.Integer, db.ForeignKey("items.item_id"))
     offered_item = db.relationship("Item", foreign_keys=[offered_item_id])
 
-    wanted_item_id = db.Column(db.Integer, db.ForeignKey("items.item_id"))
-    wanted_item = db.relationship("Item", foreign_keys=[wanted_item_id])
+    wanted_items = db.relationship("Wanted_Item", back_populates="offer")
 
 
-# class Wanted_Items(db.Model):
-#     __tablename__ = "wanted_items"
-#     wanted_item_id = db.Column(db.Integer, primary_key=True)
+class Wanted_Item(db.Model):
+    __tablename__ = "wanted_items"
+    wanted_item_id = db.Column(db.Integer, primary_key=True)
 
-#     # Relationship properties
-#     offer_id = db.Column(
-#         db.Integer,
-#         db.ForeignKey("offers.offer_id")
-#     )
+    # Relationship properties
+    offer_id = db.Column(db.Integer, db.ForeignKey("offers.offer_id"))
+    offer = db.relationship("Offer", back_populates="wanted_items")
 
-#     item_id = db.Column(
-#         db.Integer,
-#         db.ForeignKey("items.item_id")
-#     )
+    item_id = db.Column(db.Integer, db.ForeignKey("items.item_id"))
+    item = db.relationship("Item")

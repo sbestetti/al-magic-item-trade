@@ -70,6 +70,5 @@ class Login_Form(FlaskForm):
 
 
 class New_Item_Form(FlaskForm):
-    character = StringField("Character")
-    item = SelectField("Item", validators=[DataRequired()])
+    item_for = SelectField("Item", validators=[DataRequired()])
     submit = SubmitField("Submit")

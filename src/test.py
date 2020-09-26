@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime
 
 import start
-from models import db, User, Offer, Item
+from models import db, User, Offer, Item, Wanted_Item
 import login
 
 
@@ -83,7 +83,6 @@ class TestMain(unittest.TestCase):
                 sending_user=test_user_1,
                 receiving_user=test_user_2,
                 offered_item=test_item_1,
-                wanted_item=test_item_2
             )
 
             test_offer_2 = Offer(
@@ -92,7 +91,21 @@ class TestMain(unittest.TestCase):
                 sending_user=test_user_2,
                 receiving_user=test_user_1,
                 offered_item=test_item_3,
-                wanted_item=test_item_4
+            )
+
+            test_wanted_item_1 = Wanted_Item(
+                offer=test_offer_1,
+                item=test_item_2
+            )
+
+            test_wanted_item_2 = Wanted_Item(
+                offer=test_offer_1,
+                item=test_item_4
+            )
+
+            test_wanted_item_3 = Wanted_Item(
+                offer=test_offer_2,
+                item=test_item_3
             )
 
             db.session.add(test_item_1)
@@ -103,6 +116,9 @@ class TestMain(unittest.TestCase):
             db.session.add(test_user_2)
             db.session.add(test_offer_1)
             db.session.add(test_offer_2)
+            db.session.add(test_wanted_item_1)
+            db.session.add(test_wanted_item_2)
+            db.session.add(test_wanted_item_3)
             db.session.commit()
 
             self.test_user_1 = User.query.filter_by(user_id=1).first()

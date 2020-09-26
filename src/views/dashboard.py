@@ -17,3 +17,9 @@ def dashboard():
         sent_offers=sent_offers,
         received_offers=received_offers
         )
+
+
+@bp.route("/trade_form")
+@login_required
+def trade_form():
+    return render_template("trade_form.html")
